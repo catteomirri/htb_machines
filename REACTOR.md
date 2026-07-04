@@ -38,7 +38,7 @@ Il sito si presenta come **"ReactorWatch | Core Monitoring System"** — una das
 
 ### 2.1 Fingerprinting della versione
 
-Aperta la Developer Console del browser (F12) sulla pagina, è stata identificata la versione esatta di Next.js in uso tramite l'oggetto globale del framework.
+Aperta la Developer Console del browser (F12) sulla pagina, è stata identificata la versione esatta di Next.js `15.0.3`
 
 ### 2.2 Ricerca della vulnerabilità
 
@@ -90,13 +90,7 @@ ls       -> app  next.config.js  node_modules  package.json  package-lock.json  
 ### 3.1 Individuazione del database
 
 Nella cartella dell'app è presente un file **`reactor.db`** (SQLite):
-
-```bash
-cat reactor.db
-strings reactor.db
-```
-
-Dallo string-dump emerge la tabella `users` con credenziali salvate come hash MD5. Estrazione pulita del contenuto con:
+Estrazione pulita del contenuto con:
 
 ```bash
 sqlite3 reactor.db .dump
@@ -118,7 +112,7 @@ INSERT INTO users VALUES(2,'engineer','39d97110eafe2a9a68639812cd271e8e','operat
 
 ### 3.2 Cracking dell'hash
 
-L'hash a 32 caratteri associato all'utente `engineer` è stato identificato come **MD5** e sottoposto a cracking (es. via CrackStation), ottenendo la password in chiaro.
+L'hash a 32 caratteri associato all'utente `engineer` è stato identificato come **MD5** e sottoposto a cracking (es. via CrackStation), ottenendo la password in chiaro `reactor1`
 
 ### 3.3 Accesso SSH
 
@@ -219,10 +213,3 @@ cat root.txt
 6. **Root Flag** → Shell privilegiata con `/tmp/r00t -p`.
 
 ---
-
-## 6. Lezioni apprese / Mitigazioni
-
-- Mantenere Next.js aggiornato per evitare CVE note su Server Actions/RSC.
-- Non salvare password in chiaro o con hash deboli (MD5) nel database applicativo.
-- Non esporre mai il Node.js Inspector (`--inspect`), nemmeno su `127.0.0.1`, su processi eseguiti con privilegi elevati (root) in produzione.
-- Applicare il principio del minimo privilegio ai processi di servizio.
