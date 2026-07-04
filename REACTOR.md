@@ -127,9 +127,6 @@ ls
 cat user.txt
 ```
 
-```
-58bfdc75155c6eafd9c6a23acecbc894
-```
 
 ---
 
@@ -195,10 +192,6 @@ Lettura della flag finale:
 ```bash
 cd /root
 cat root.txt
-```
-
-```
-3ce6efac5565e8ac838d6021890dee37
 ```
 
 ---
